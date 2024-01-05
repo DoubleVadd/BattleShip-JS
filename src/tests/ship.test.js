@@ -36,9 +36,27 @@ test('Ship Placement Validator', ()=>{
     expect(board.validPlacement(shipLong, 96, 'v')).toBe(false)
     expect(board.validPlacement(shipLong, 55, 'v')).toBe(true)
     expect(board.validPlacement(shipLong, 65, 'v')).toBe(false)
+})
 
+test('Placing Ships',()=>{
+    let board = new GameBoard()
+    let shipShort = new Ship(2)
+    let shipMedium = new Ship(3)
+    let shipLong = new Ship(5)
+    board.placeShip(shipShort, 0, 'h')
+    board.placeShip(shipMedium, 90, 'h')
+    board.placeShip(shipLong, 55, 'v')
+    let gameState = board.board
+    expect(gameState.slice(0,3)).toStrictEqual([1,1,1])
+    expect(gameState.slice(90,94)).toStrictEqual([1,1,1,1])
+    expect([gameState[55],gameState[65],gameState[75],gameState[85],gameState[95]]).toStrictEqual([1,1,1,1,1])
+})
 
-
+test('check if all ship has sunk',()=>{
+    let board = new GameBoard()
+    expect(board.checkAllSunk()).toBe(true)
+    board.board[0] = 1
+    expect(board.checkAllSunk()).toBe(false)
 })
 
 
