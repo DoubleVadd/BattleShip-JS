@@ -10,7 +10,7 @@ class GameBoard{
         if(direction === 'h'){
             placement = index%10+ship.length<=10 ? true : false
             if(placement){
-                for(let i=0; i<ship.length+1; i++){
+                for(let i=0; i<ship.length; i++){
                     if(this.board[index+i] !== 0){
                         placement = false
                         break
@@ -34,7 +34,7 @@ class GameBoard{
     // can place anywhere but should require validPlacement before used
     placeShip(ship, index, direction){
         if(direction === 'h'){
-            for(let i=0; i<ship.length+1; i++){
+            for(let i=0; i<ship.length; i++){
                 this.board[index+i] = 1
             }
         }else if(direction === 'v'){
@@ -42,6 +42,7 @@ class GameBoard{
                 this.board[index+i*10] = 1
             }
         }
+        console.log(index, ship.length, direction)
 
     }
 
@@ -74,7 +75,7 @@ class GameBoard{
         let text = ``
         for(let i =1; i<11; i++){
             text += this.board.slice(prev, i*10).join(" ") +'\n'
-            prev = i*10
+            prev +=10
         }
         console.log(text)
     }

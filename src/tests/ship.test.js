@@ -1,5 +1,6 @@
 import Ship from "../gameComponents/shipHandler";
 import GameBoard from "../gameComponents/boardHandler";
+import Player from "../gameComponents/playerHandler";
 
 test('ship is hit, and not sunk', () =>{
     let ship = new Ship(3)
@@ -47,17 +48,26 @@ test('Placing Ships',()=>{
     board.placeShip(shipMedium, 90, 'h')
     board.placeShip(shipLong, 55, 'v')
     let gameState = board.board
-    expect(gameState.slice(0,3)).toStrictEqual([1,1,1])
-    expect(gameState.slice(90,94)).toStrictEqual([1,1,1,1])
+    expect(gameState.slice(0,3)).toStrictEqual([1,1,0])
+    expect(gameState.slice(90,93)).toStrictEqual([1,1,1])
     expect([gameState[55],gameState[65],gameState[75],gameState[85],gameState[95]]).toStrictEqual([1,1,1,1,1])
+})
+
+test('all ship validly Placed', ()=>{
+    let player1 = new Player()
+    player1.randomPlacement()
+    let boardState = player1.board.board
+    expect(boardState.reduce((a,b)=>{return a+b})).toBe(17)
 })
 
 test('check if all ship has sunk',()=>{
     let board = new GameBoard()
     expect(board.checkAllSunk()).toBe(true)
-    board.board[0] = 1
+    board.board[55] = 1
     expect(board.checkAllSunk()).toBe(false)
 })
+
+
 
 
 

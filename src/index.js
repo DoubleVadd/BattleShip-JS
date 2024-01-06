@@ -1,5 +1,6 @@
 import Ship from "./gameComponents/shipHandler";
 import GameBoard from "./gameComponents/boardHandler";
+import Player from "./gameComponents/playerHandler" 
 
 let a = new GameBoard()
 a.printBoard()
@@ -21,3 +22,6 @@ a.receiveAttack(10)
 a.receiveAttack(5)
 
 a.printBoard()
+
+let b = new Player()
+b.randomPlacement()
