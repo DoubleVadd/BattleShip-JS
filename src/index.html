@@ -3,18 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battle Ship</title>
+    <title>BATTLE SHIP</title>
 </head>
 <body>
     <div id="overlay"></div>
     <main class="game">
-        <header><h1>BattleShip</h1></header>
+        <header><h1>BATTLESHIP</h1></header>
         <article class="gameContainer">
 
             <section class="player-container player-left">
                 <h1>You</h1>
-                <div class="board-container left" id="left-board"></div>
-                <div class="ship-container"></div>
+                <div class="board-container left" id="left-board">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div>O</div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div>X</div>
+                    <div>X</div>
+                    <div>X</div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div>O</div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="ship-container">
+                    <div class="ship-title"><h2>Your Ships</h2></div>
+                    <hr>
+                    <div class="ship-list">
+                        <div id="ship1" class="ship">##</div>
+                        <div id="ship2" class="ship">###</div>
+                        <div id="ship3" class="ship">###</div>
+                        <div id="ship4" class="ship">####</div>
+                        <div id="ship5" class="ship">#####</div>
+                    </div>
+                </div>
             </section>
 
             <section class="game-status middle">
@@ -45,15 +156,128 @@
 
             <section class="player-container player-right">
                 <h1>Enemy</h1>
-                <div class="board-container right" id="right-board"></div>
-                <div class="global-status"></div>
+                <div class="board-container right" id="right-board">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div class="filled"></div>
+                    <div class="filled"></div>
+                    <div class="filled"></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div class="filled"></div>
+                    <div class="filled"></div>
+                    <div class="filled"></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div class="filled"></div>
+                    <div class="filled"></div>
+                    <div class="filled"></div>
+                    <div class="filled"></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="global-status">
+                    <div>
+                        <h2>status:</h2>
+                    </div>
+                    <hr>
+                    <div class="global-status-grid">
+                        <h3 id="game-count">Number of Games:</h3>
+                        <h3 id="sunk-count">Number of Ships Sunk:</h3>
+                        <h3 id="win-count">Number of Games Won:</h3>
+                        <h3 id="shot-count">Number of Shots Taken:</h3>
+                    </div>
+
+                </div>
             </section>
             
            
 
             </section>
         </article>
-        <footer><h1>made by doubleVadd</h1></footer>
+        <footer><h1></h1></footer>
 
     </main>
     

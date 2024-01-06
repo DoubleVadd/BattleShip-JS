@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 
 :root{
-    font-family: 'VT323', monospace;
+    font-family: monospace;
     font-smooth: never;
     -webkit-font-smoothing : none;
+    --green : #41FF00;
+    --text-glow: 0.01em 0.01em 0.01em rgb(202, 255, 103), 0 0 0.1em blue, 0 0 0.2em rgb(255, 53, 53);
+    --border-glow: inset 0.01em 0.01em 0.01em rgb(202, 255, 103), inset 0 0 0.1em blue, inset 0 0 0.2em rgb(255, 53, 53);
 }
 
 html {
@@ -28,13 +31,178 @@ html {
     right: 0;
     bottom: 0;
     background: url('./Images/background.png') repeat;
-    mix-blend-mode:soft-light;
+    /* mix-blend-mode:soft-light; */
+    mix-blend-mode:hue;
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
     pointer-events: none;
   }
 
 body{
-    color: #41FF00;
-    text-shadow: 0.01em 0.01em 0.01em rgb(202, 255, 103), 0 0 0.1em blue, 0 0 0.2em rgb(255, 53, 53);
+    color: var(--green);
+    text-shadow: var(--text-glow);
+}
+
+header, footer{
+    height: 3rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gameContainer{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 8fr 1fr 8fr;
+    place-items: center;
+    /* background-color: red; */
+    height: 80vh;
+    /* margin-bottom: auto; */
+    margin: auto;
+}
+
+.player-container{
+    height: 100%;
+    width: 100%;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 2rem;
+}
+
+.player-container h1{
+    text-align:center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.player-container> .board-container{
+    display: grid;
+    align-self: center;
+    grid-template-columns: repeat(10, 1fr);
+    width: 65%;
+    aspect-ratio: 1;
+    /* background-color: purple; */
+}
+
+.board-container>div{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    aspect-ratio: 1;
+    outline: var(--green) 1px dashed;
+    box-shadow: var(--border-glow);
+    margin: 0;
+    padding: 0;
+    transition: 0.1s;
+}
+
+.board-container .filled{
+    background-color: var(--green);
+}
+
+.board-container>div:hover{
+    background-color: var(--green);
+    cursor: pointer;
+
+
+}
+
+.ship-container, .global-status{
+    width: 65%;
+    text-align: center;
+    margin: auto;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
+
+.ship-container .ship-list{
+    
+    display: grid;  
+    grid-template-columns: repeat(3,1fr);
+    place-items: center;
+    gap: 1rem;
+    
+}
+
+.ship-list{
+    margin-top: 1rem;
+    font-size: 2.5rem
+}
+
+.ship{
+    padding: 0rem 1rem;
+    outline: 1px dashed var(--green);
+}
+
+
+.game-status{
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-status>ul{
+    /* background-color: red; */
+
+    height: 50vh;
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    list-style-type: none;
+}
+.game-status li h1{
+    font-size: 2rem;
+    outline: 1px var(--green) dashed;
+    margin: 1rem;
+    padding: 0.5rem;
+
+}
+
+
+.game-status>li{
+    margin-top: 5rem;
+}
+
+button{
+    background: none;
+    border: none;
+    outline: 1px dashed var(--green);
+    color: var(--green);
+    text-shadow: var(--text-glow);
+    box-shadow: var(--border-glow);
+    font-size: 2rem;
+    padding: 1rem;
+    font-family: inherit;
+    
+}
+
+button:hover{
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: var(--green);
+    color: black;
+    text-shadow: none;
+}
+
+hr{
+    border: none;
+    border-bottom: 1px dashed var(--green);
+    margin-bottom: 1rem;
 }
