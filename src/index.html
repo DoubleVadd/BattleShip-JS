@@ -3,10 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template</title>
+    <title>Battle Ship</title>
 </head>
 <body>
-    <div>template</div>
+    <div id="overlay"></div>
+    <main class="game">
+        <header><h1>BattleShip</h1></header>
+        <article class="gameContainer">
+
+            <section class="player-container player-left">
+                <h1>You</h1>
+                <div class="board-container left" id="left-board"></div>
+                <div class="ship-container"></div>
+            </section>
+
+            <section class="game-status middle">
+                <ul class="currrent-status">
+                    <li class="status-container" id="turn">
+                        <h2>Turn</h2>
+                        <h1>1</h1>
+                    </li>
+                    <li class="status-container" id="turn">
+                        <h2>Turn</h2>
+                        <h1>1</h1>
+                    </li>
+                    <li class="status-container" id="attack-p1">
+                        <h2>Last Attack: You</h2>
+                        <h1>1,1</h1>
+                    </li>
+                    <li class="status-container" id="attack-p1">
+                        <h2>Last Attack: Enemy</h2>
+                        <h1>5,5</h1>
+                    </li>
+                    <li class="status-container" id="Battle-Status">
+                        <h2>Battle Status</h2>
+                        <h1>Ongoing</h1>
+                    </li>
+                </ul>
+                <button id="reset">Reset</button>
+            </section>
+
+            <section class="player-container player-right">
+                <h1>Enemy</h1>
+                <div class="board-container right" id="right-board"></div>
+                <div class="global-status"></div>
+            </section>
+            
+           
+
+            </section>
+        </article>
+        <footer><h1>made by doubleVadd</h1></footer>
+
+    </main>
     
 </body>
 </html>

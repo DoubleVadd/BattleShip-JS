@@ -11,6 +11,7 @@ class Player{
         this.player = Player.#play
         Player.#updatePlayerCount()
         this.board = new GameBoard()
+        this.enemyBoard = new Array(100).fill(0)
         this.shipList = [new Ship(5),new Ship(4),new Ship(3),new Ship(3),new Ship(2)]
         this.score=0
         this.turn = false
@@ -29,13 +30,23 @@ class Player{
                     this.board.placeShip(ship, placement_index, placement_direction)
                     placed = true
                 }
-                
             }
         }
         console.log('all ships have been placed')
-        this.board.printBoard()
     }
 
+    randomHitEasy(enemy){
+        if(this.enemyBoard.indexOf(0)!==-1 && !enemy.board.checkAllSunk()){
+            let currentHit = false
+            while(!currentHit){
+                let hitIndex = Math.floor(Math.random() * 100)
+                if(this.enemyBoard[hitIndex]===0){
+                    currentHit = true
+                    this.enemyBoard[hitIndex] = enemy.board.receiveAttack(hitIndex) ? -1 : -2
+                }
+            }   
+        }
+    }
 
 }
 

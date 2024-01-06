@@ -47,16 +47,17 @@ class GameBoard{
     }
 
     receiveAttack(index){
-        if(this.board[index]===1){
-            this.board[index]=-1
-            console.log("Hit")
-            return true
-        }else{
-            this.board[index]=-2
-            console.log("Missed")
-            return false
-        }
-
+        if(this.board.indexOf(0)!==-1){
+            if(this.board[index]===1){
+                this.board[index]=-1
+                console.log("Hit")
+                return true
+            }else if(this.board[index]===0){
+                this.board[index]=-2
+                console.log("Missed")
+                return false
+            }
+        }return false
     }
 
     checkAllSunk(){
