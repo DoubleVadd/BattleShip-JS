@@ -9,5 +9,13 @@ const p2 = new Player()
 
 const dom = display()
 dom.initialRender()
-p1.randomPlacement()
+// p1.randomPlacement()
+p2.randomPlacement()
+
+
 dom.generateUserBoard(p1)
+dom.generateEnemyBoard(p1)
+dom.enemyBoardEvent(p1, p2)
+
+
+dom.placementRender(p1, p1.shipList, 4)

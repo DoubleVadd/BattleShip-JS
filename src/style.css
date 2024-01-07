@@ -38,6 +38,58 @@ html {
     pointer-events: none;
   }
 
+#gameOver{
+    position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('./Images/background.png') repeat;
+    opacity: 0.85;
+    mix-blend-mode: hard-light;
+    z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    text-shadow: var(--text-glow);
+    /* Add a pointer on hover */
+    transition: 1s;
+}
+#gameOver.hidden{
+    display: none;
+}
+
+#gameSetup{
+    position: fixed; /* Sit on top of the page content */
+    display: flex; /* Hidden by default */
+    flex-direction: column;
+    width: 60%; /* Full width (cover the whole page) */
+    height: 100vh; /* Full height (cover the whole page) */
+    background: black;
+    top: 0;
+    left: 40;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    z-index: 3; /* Specify a stack order in case you're using a different order for other elements */
+    padding: 4rem;
+    gap: 1rem;
+}
+
+#gameSetup .ship{
+    margin: auto;
+    font-size: 4rem;
+}
+
+#gameSetup .hidden{
+    display: none;
+}
+
 body{
     background-color: black;
     color: var(--green);
@@ -113,15 +165,24 @@ main{
 .board-container .filled{
     background-color: var(--green);
 }
+#left-board .hit{
+    background-color: var(--green);
+}
 
-.board-container .hit::after{
+#left-board .hit::after{
     content: 'X';
     color: black;
     /* background-color: red; */
 }
 
+#right-board .hit::after{
+    content: 'X';
+    color: var(--text-glow);
+    /* background-color: red; */
+}
+
 .missed::after{
-    content: 'O';
+    content: '-';
     color: var(--green);
     text-shadow: var(--text-glow);
 }

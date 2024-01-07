@@ -14,6 +14,7 @@ class Player{
         this.enemyBoard = new Array(100).fill(0)
         this.shipList = [new Ship(5),new Ship(4),new Ship(3),new Ship(3),new Ship(2)]
         this.score=0
+        this.hp = 17
         this.turn = false
     }
 
@@ -35,6 +36,14 @@ class Player{
         console.log('all ships have been placed')
     }
 
+    chosenPlacement(ship, index, direction){
+        if(this.board.validPlacement(ship, index, direction)){
+            this.board.placeShip(ship, index, direction)
+            console.log('placed')
+        }
+    }
+
+
     randomHitEasy(enemy){
         if(this.enemyBoard.indexOf(0)!==-1 && !enemy.board.checkAllSunk()){
             let currentHit = false
@@ -46,6 +55,25 @@ class Player{
                 }
             }   
         }
+    }
+
+    hitEnemy(coordinate, enemy){
+        console.log(coordinate)
+        if(this.enemyBoard.indexOf(0)!==-1 && !enemy.board.checkAllSunk()){
+            let hitIndex = coordinate
+            if(this.enemyBoard[hitIndex]===0){
+                if(enemy.board.receiveAttack(hitIndex)){
+                    this.enemyBoard[hitIndex] = -1
+                    enemy.hp -=1
+                }else{
+                    this.enemyBoard[hitIndex] = -2
+                }
+                return true
+            }
+            
+        }
+        return false
+
     }
 
 }

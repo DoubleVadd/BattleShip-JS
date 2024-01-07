@@ -1,5 +1,16 @@
 const display = () =>{
 
+    let turn = 0
+    let remaining = 17
+    let lastAttack1 = '--'
+    let lastAttack2 = '--'
+    let battleStatus = 'attack'
+    let totalGames = 0
+    let totalShipSunk = 0
+    let totalShots = 0
+    let totalWin = 0
+
+    let placementCount = 1
 
     const gridCreator = (player) =>{
         let div = ``
@@ -37,23 +48,23 @@ const display = () =>{
                 <ul class="currrent-status">
                     <li class="status-container" id="turn">
                         <h2>Turn</h2>
-                        <h1>--</h1>
+                        <h1>${turn}</h1>
                     </li>
-                    <li class="status-container" id="turn">
-                        <h2>Turn</h2>
-                        <h1>--</h1>
+                    <li class="status-container" id="remaining">
+                        <h2>remaining</h2>
+                        <h1>${remaining}</h1>
                     </li>
                     <li class="status-container" id="attack-p1">
                         <h2>Last Attack: You</h2>
-                        <h1>--</h1>
+                        <h1>${lastAttack1}</h1>
                     </li>
-                    <li class="status-container" id="attack-p1">
+                    <li class="status-container" id="attack-p2">
                         <h2>Last Attack: Enemy</h2>
-                        <h1>--</h1>
+                        <h1>${lastAttack2}</h1>
                     </li>
                     <li class="status-container" id="Battle-Status">
                         <h2>Battle Status</h2>
-                        <h1>stop</h1>
+                        <h1>${battleStatus}</h1>
                     </li>
                 </ul>
                 <button id="reset">Reset</button>
@@ -70,10 +81,10 @@ const display = () =>{
                     </div>
                     <hr>
                     <div class="global-status-grid">
-                        <h3 id="game-count">Number of Games: 0</h3>
-                        <h3 id="sunk-count">Number of Ships Sunk: 0</h3>
-                        <h3 id="win-count">Number of Games Won: 0</h3>
-                        <h3 id="shot-count">Number of Shots Taken: 0</h3>
+                        <h3 id="game-count">Number of Games: ${totalGames}</h3>
+                        <h3 id="sunk-count">Number of Ships Sunk: ${totalShipSunk}</h3>
+                        <h3 id="win-count">Number of Games Won: ${totalWin}</h3>
+                        <h3 id="shot-count">Number of Shots Taken: ${totalShots}</h3>
                     </div>
 
                 </div>
@@ -84,19 +95,170 @@ const display = () =>{
         `
     }
 
-    const generateUserBoard = (player='') => {
+    const placementRender = (player, shipList, shipCount)=>{
+        let ship = shipList[shipCount]
+        const playerBoard = document.querySelector('#left-board')
+        generateUserBoard(player)
+        if(shipCount >= 0){
+            console.log(shipCount)
+            console.log(ship)
+            const placementOverlay = document.querySelector('#gameSetup')
+            // placementOverlay.replaceWith(placementOverlay.cloneNode(true))
+            
+            placementOverlay.innerHTML = `
+                <h1>Please Organize Your Ships: ${placementCount++}/5</h1>
+                <h2>To place the Current Ship, Hover Over the Grid and Left Click.</h2>
+                <h2>Game Will Start Automatically Once All Ships are Placed.</h2>
+                <br>
+                <hr>
+                <h2>You Are Currently Placing:</h2>
+                <h1 class="ship">${'#'.repeat(ship.length)}</h1>
+                <button id="rotate">Rotate</button>
+                <button id="random-placement">Place Randomly</button>
+            `
+            const rotate = document.querySelector('#rotate')
+            let rotation = 'h'
+            rotate.addEventListener('click', e=>{
+                e.stopPropagation
+                rotation = rotation === 'h' ? 'v' : 'h'
+                const currentShip = document.querySelector('#gameSetup .ship')
+                currentShip.innerHTML = rotation ==='h' ? `${'#'.repeat(ship.length)}` : `${'#<br>'.repeat(ship.length)}`
+            })
+            // chosenPlacement
+            // const playerBoard = document.querySelector('#left-board')
+            playerBoard.childNodes.forEach(box => {
+                box.addEventListener('mouseover', function hoverHandler(e){
+                    let index = String(e.target.id).slice(1)
+                    if(player.board.validPlacement(ship,Number(index),rotation)){
+                        indicator(player, ship,Number(index),rotation)
+                        console.log('bbbbbbbb', ship.length)
+                        // console.log('ye')
+                    }else{
+                        indicatorOff(player, ship,Number(index),rotation)
+                    }
+                    // box.removeEventListener('mouseover', hoverHandler(e))
+                })
+                box.addEventListener('click', function clickHandler(e){
+                    let index = String(e.target.id).slice(1)
+                    if(player.board.validPlacement(ship,Number(index),rotation)){
+                        console.log('aaaa', ship.length)
+                        player.chosenPlacement(ship,Number(index),rotation)
+                        box.removeEventListener('click', clickHandler(e))
+                        placementRender(player, shipList, --shipCount)
+                    }
+                })
+                })
+            }
+
+    }
+
+    function indicatorOff(player, ship, index, rotation){
+        const playerBoard = document.querySelector('#left-board')
+        playerBoard.childNodes.forEach(e => {
+            if(player.board.board[Number(String(e.id).slice(1))] == 0){
+                e.className = ''
+            }
+        })
+    }
+
+    function indicator(player, ship, index, rotation){
+        const playerBoard = document.querySelector('#left-board')
+        playerBoard.childNodes.forEach(e => {
+            if(player.board.board[Number(String(e.id).slice(1))] == 0){
+                e.className = ''
+            }
+        })
+        if(rotation === 'h' && player.board.validPlacement(ship,index,rotation)){
+                for(let i=0; i<ship.length; i++){
+                    playerBoard.childNodes[index+i+1].className = 'filled'
+                    
+                }
+        }else if(rotation === 'v'){
+                for(let i=0; i<ship.length; i++){
+                    playerBoard.childNodes[index+i*10+1].className = 'filled'
+                }
+        }
+
+
+    }
+
+    const statusUpdate = () =>{
+        // Middle Status
+        const currentTurn = document.querySelector('#turn h1')
+        currentTurn.textContent = turn
+        const currentRemaining = document.querySelector('#remaining h1')
+        currentRemaining.textContent = remaining
+        const playerAttack = document.querySelector('#attack-p1 h1')
+        playerAttack.textContent = lastAttack1
+        const enemyAttack = document.querySelector('#attack-p2 h1')
+        enemyAttack.textContent = lastAttack2
+        const currentBattle = document.querySelector('#Battle-Status h1')
+        currentBattle.textContent = battleStatus
+        // Global Status
+        const globalStatus = document.querySelector('.global-status-grid')
+        globalStatus.innerHTML = `
+                        <h3 id="game-count">Number of Games: ${totalGames}</h3>
+                        <h3 id="sunk-count">Number of Ships Sunk: ${totalShipSunk}</h3>
+                        <h3 id="win-count">Number of Games Won: ${totalWin}</h3>
+                        <h3 id="shot-count">Number of Shots Taken: ${totalShots}</h3>
+        `
+    }
+
+    const generateUserBoard = (player) => {
         const playerBoard = document.querySelector('#left-board')
         playerBoard.childNodes.forEach(box => {
             let loc = String(box.id).slice(1)
             if(loc){
                 if(player.board.board[loc] === 1){
-                    console.log('a')
-                    box.className = 'filled'
+                    box.className = 'filled'   
+                }else if(player.board.board[loc] === -1){
                     box.classList.add('hit')
+                }else if(player.board.board[loc] === -2){
+                    box.className = 'missed' 
                 }
             }
         });
-        // console.log(playerBoard.childNodes)
+    }
+
+    const generateEnemyBoard = (player)=>{
+        const enemyBoard = document.querySelector('#right-board')
+        enemyBoard.childNodes.forEach(box => {
+            let loc = String(box.id).slice(1)
+            if(loc){
+                if(player.enemyBoard[loc] === -1){
+                    box.className = 'hit'   
+                }else if(player.enemyBoard[loc] === -2){
+                    box.classList.add('missed')
+                }
+            }
+        })
+
+    }
+
+    const enemyBoardEvent = (player, enemy)=>{
+        const enemyBoard = document.querySelector('#right-board')
+        enemyBoard.childNodes.forEach(box => {
+                box.addEventListener('click', e =>{
+                    e.stopPropagation
+                    if(player){
+                        let coordinate =  String(e.target.id).slice(1)
+                        if(player.hitEnemy(coordinate, enemy)){
+                            generateEnemyBoard(player)
+                            enemy.randomHitEasy(player)
+                            generateUserBoard(player)
+                            turn++
+                            totalShots++
+                            remaining = enemy.hp
+                            statusUpdate()
+                            // remaining = 17
+                            // lastAttack1 = '--'
+                            // lastAttack2 = '--'
+                        }
+                        
+                    }
+                })
+            }
+        )
 
     }
 
@@ -104,7 +266,7 @@ const display = () =>{
     
 
 
- return {initialRender, generateUserBoard}
+ return {initialRender, generateUserBoard, generateEnemyBoard, statusUpdate, enemyBoardEvent, placementRender}
 }
 
 export default display
