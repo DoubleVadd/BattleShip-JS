@@ -84,8 +84,27 @@ const display = () =>{
         `
     }
 
+    const generateUserBoard = (player='') => {
+        const playerBoard = document.querySelector('#left-board')
+        playerBoard.childNodes.forEach(box => {
+            let loc = String(box.id).slice(1)
+            if(loc){
+                if(player.board.board[loc] === 1){
+                    console.log('a')
+                    box.className = 'filled'
+                    box.classList.add('hit')
+                }
+            }
+        });
+        // console.log(playerBoard.childNodes)
 
- return {initialRender}
+    }
+
+
+    
+
+
+ return {initialRender, generateUserBoard}
 }
 
 export default display

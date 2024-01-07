@@ -9,3 +9,5 @@ const p2 = new Player()
 
 const dom = display()
 dom.initialRender()
+p1.randomPlacement()
+dom.generateUserBoard(p1)

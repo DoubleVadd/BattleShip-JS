@@ -31,14 +31,15 @@ html {
     right: 0;
     bottom: 0;
     background: url('./Images/background.png') repeat;
-    /* mix-blend-mode:soft-light; */
-    mix-blend-mode:hue;
+    opacity: 0.3;
+    mix-blend-mode: hard-light;
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
     pointer-events: none;
   }
 
 body{
+    background-color: black;
     color: var(--green);
     text-shadow: var(--text-glow);
 }
@@ -111,6 +112,18 @@ main{
 
 .board-container .filled{
     background-color: var(--green);
+}
+
+.board-container .hit::after{
+    content: 'X';
+    color: black;
+    /* background-color: red; */
+}
+
+.missed::after{
+    content: 'O';
+    color: var(--green);
+    text-shadow: var(--text-glow);
 }
 
 .board-container>div:hover{
