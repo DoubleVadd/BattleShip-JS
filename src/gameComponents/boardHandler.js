@@ -4,6 +4,10 @@ class GameBoard{
         this.board = new Array(100).fill(0)
     }
 
+    resetGameBoard(){
+        this.board = Array(100).fill(0)
+    }
+
 
     validPlacement(ship, index, direction){
         let placement = false
@@ -42,7 +46,6 @@ class GameBoard{
                 this.board[index+i*10] = 1
             }
         }
-        console.log(index, ship.length, direction)
 
     }
 

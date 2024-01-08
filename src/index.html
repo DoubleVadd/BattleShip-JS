@@ -7,23 +7,30 @@
 </head>
 <body>
     <div id="overlay"></div>
-    <div id="gameOver" class="hidden">
-        <h4>YOU WON IN</h4>
-        <h1>-- Turns</h1>
-        <h4>Play Again?</h4>
-        <br>
-        <button class="reset">Reset</button>
+    <div id="gameOver">
+        <div class="top">
+            <h4>Welcome To Simple Battleship</h4>
+            <h2>Current Opponent: Simple AI</h2>
+            <p style="font-size: 1.7rem; margin-bottom: 4rem;">*currently only easy AI opponent is implemented</p>
+            <h4>Begin Game?</h4>
+            <br>
+        </div>
+        <button id="play-again">Play</button>
     </div>
     <div id="gameSetup" class="hidden">
-        <h1>Please Organize Your Ships: 1/5</h1>
-        <h2>To place the Current Ship, Hover Over the Grid and Left Click.</h2>
-        <h2>Game Will Start Automatically Once All Ships are Placed.</h2>
-        <br>
-        <hr>
-        <h2>You Are Currently Placing:</h2>
-        <h1 class="ship">###</h1>
-        <button id="rotate">Rotate</button>
-        <button id="random-placement">Place Randomly</button>
+        <div class="top">
+            <h1>Please Organize Your Ships: 1/5</h1>
+            <h2>To place the Current Ship, Hover Over the Grid and Left Click.</h2>
+            <h2>Game Will Start Automatically Once All Ships are Placed.</h2>
+            <br>
+            <hr>
+            <h2>You Are Currently Placing:</h2>
+            <h1 class="ship">##</h1>
+        </div>
+        <div class="bottom">
+            <button id="rotate">Rotate</button>
+            <button id="random-placement">Place All Randomly</button>
+        </div>
     </div>
     <main class="game">
     </main>

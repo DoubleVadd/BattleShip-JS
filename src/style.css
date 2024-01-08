@@ -60,6 +60,13 @@ html {
     /* Add a pointer on hover */
     transition: 1s;
 }
+
+#gameOver .top{
+    text-align: center;
+}
+
+
+
 #gameOver.hidden{
     display: none;
 }
@@ -68,6 +75,7 @@ html {
     position: fixed; /* Sit on top of the page content */
     display: flex; /* Hidden by default */
     flex-direction: column;
+    justify-content: space-around;
     width: 60%; /* Full width (cover the whole page) */
     height: 100vh; /* Full height (cover the whole page) */
     background: black;
@@ -81,12 +89,31 @@ html {
     gap: 1rem;
 }
 
+#gameSetup .top{
+    display: flex; /* Hidden by default */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%; /* Full width (cover the whole page) */
+    gap: 1rem;
+    margin-bottom: auto;
+}
+
+#gameSetup .bottom{
+    display: flex; /* Hidden by default */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%; /* Full width (cover the whole page) */
+    gap: 1rem;
+    margin-top: auto;
+}
+
 #gameSetup .ship{
     margin: auto;
+    margin-top: 25%;
     font-size: 4rem;
 }
 
-#gameSetup .hidden{
+#gameSetup.hidden{
     display: none;
 }
 

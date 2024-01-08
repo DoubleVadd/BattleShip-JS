@@ -5,12 +5,21 @@ const display = () =>{
     let lastAttack1 = '--'
     let lastAttack2 = '--'
     let battleStatus = 'attack'
+    let totalTurns = 0
     let totalGames = 0
-    let totalShipSunk = 0
+    let totalHits = 0
     let totalShots = 0
     let totalWin = 0
 
     let placementCount = 1
+
+    const resetScore = () => {
+        turn = 0
+        remaining = 17
+        lastAttack1 = '--'
+        lastAttack2 = '--'
+        battleStatus = 'attack'
+    }
 
     const gridCreator = (player) =>{
         let div = ``
@@ -82,9 +91,9 @@ const display = () =>{
                     <hr>
                     <div class="global-status-grid">
                         <h3 id="game-count">Number of Games: ${totalGames}</h3>
-                        <h3 id="sunk-count">Number of Ships Sunk: ${totalShipSunk}</h3>
+                        <h3 id="sunk-count">Number of Times Hit: ${totalHits}</h3>
                         <h3 id="win-count">Number of Games Won: ${totalWin}</h3>
-                        <h3 id="shot-count">Number of Shots Taken: ${totalShots}</h3>
+                        <h3 id="shot-count">Number of Shots Fired: ${totalShots}</h3>
                     </div>
 
                 </div>
@@ -95,16 +104,10 @@ const display = () =>{
         `
     }
 
-    const placementRender = (player, shipList, shipCount)=>{
-        let ship = shipList[shipCount]
-        const playerBoard = document.querySelector('#left-board')
-        generateUserBoard(player)
-        if(shipCount >= 0){
-            console.log(shipCount)
-            console.log(ship)
-            const placementOverlay = document.querySelector('#gameSetup')
-            // placementOverlay.replaceWith(placementOverlay.cloneNode(true))
-            
+
+    const placementOverlayRender = (placementCount, ship)=>{
+        if(ship){
+            const placementOverlay = document.querySelector('#gameSetup .top')
             placementOverlay.innerHTML = `
                 <h1>Please Organize Your Ships: ${placementCount++}/5</h1>
                 <h2>To place the Current Ship, Hover Over the Grid and Left Click.</h2>
@@ -113,39 +116,71 @@ const display = () =>{
                 <hr>
                 <h2>You Are Currently Placing:</h2>
                 <h1 class="ship">${'#'.repeat(ship.length)}</h1>
-                <button id="rotate">Rotate</button>
-                <button id="random-placement">Place Randomly</button>
             `
+        }
+    }
+
+    const placementRender = (player, shipList, shipCount)=>{
+        let ship = shipList[shipCount]
+        let shipPlaced = 1
+        const playerBoard = document.querySelector('#left-board')
+        generateUserBoard(player)
+        
+        if(shipCount >= 0){
             const rotate = document.querySelector('#rotate')
             let rotation = 'h'
             rotate.addEventListener('click', e=>{
                 e.stopPropagation
                 rotation = rotation === 'h' ? 'v' : 'h'
                 const currentShip = document.querySelector('#gameSetup .ship')
-                currentShip.innerHTML = rotation ==='h' ? `${'#'.repeat(ship.length)}` : `${'#<br>'.repeat(ship.length)}`
+                // currentShip.innerHTML = rotation ==='h' ? `${'#'.repeat(ship.length)}` : `${'#<br>'.repeat(ship.length)}`
+                currentShip.innerHTML = `${'#'.repeat(ship.length)}`
             })
-            // chosenPlacement
-            // const playerBoard = document.querySelector('#left-board')
+
+            const randomPlacement = document.querySelector('#random-placement')
+            randomPlacement.addEventListener('click', e=>{
+                player.resetBoard()
+                player.randomPlacement()
+                const placementOverlay = document.querySelector('#gameSetup')
+                    placementOverlay.classList.add('hidden')
+                    console.log('done')
+                shipCount = -1
+                player.board.printBoard()
+                generateUserBoard(player)
+                return
+
+            })
+
             playerBoard.childNodes.forEach(box => {
                 box.addEventListener('mouseover', function hoverHandler(e){
-                    let index = String(e.target.id).slice(1)
-                    if(player.board.validPlacement(ship,Number(index),rotation)){
-                        indicator(player, ship,Number(index),rotation)
-                        console.log('bbbbbbbb', ship.length)
-                        // console.log('ye')
-                    }else{
-                        indicatorOff(player, ship,Number(index),rotation)
+                    if(shipCount >= 0){
+                        let index = String(e.target.id).slice(1)
+                        if(player.board.validPlacement(ship,Number(index),rotation)){
+                            indicator(player, ship,Number(index),rotation)
+                        }else{
+                            indicatorOff(player, ship,Number(index),rotation)
+                        }
                     }
-                    // box.removeEventListener('mouseover', hoverHandler(e))
                 })
                 box.addEventListener('click', function clickHandler(e){
-                    let index = String(e.target.id).slice(1)
-                    if(player.board.validPlacement(ship,Number(index),rotation)){
-                        console.log('aaaa', ship.length)
-                        player.chosenPlacement(ship,Number(index),rotation)
-                        box.removeEventListener('click', clickHandler(e))
-                        placementRender(player, shipList, --shipCount)
+                    if(shipCount >= 0){
+                        let index = String(e.target.id).slice(1)
+                        if(player.board.validPlacement(ship,Number(index),rotation)){
+                            player.chosenPlacement(ship,Number(index),rotation)
+                            // box.removeEventListener('click', clickHandler(e))
+                           
+                            ship = shipList[--shipCount]
+                            shipPlaced++
+                            if(shipCount >= 0){
+                                placementOverlayRender(shipPlaced, ship)
+                            }else{
+                                const placementOverlay = document.querySelector('#gameSetup')
+                                placementOverlay.classList.add('hidden')
+                                console.log('done')
+                            }
+                        }
                     }
+                    
                 })
                 })
             }
@@ -197,10 +232,10 @@ const display = () =>{
         // Global Status
         const globalStatus = document.querySelector('.global-status-grid')
         globalStatus.innerHTML = `
-                        <h3 id="game-count">Number of Games: ${totalGames}</h3>
-                        <h3 id="sunk-count">Number of Ships Sunk: ${totalShipSunk}</h3>
-                        <h3 id="win-count">Number of Games Won: ${totalWin}</h3>
-                        <h3 id="shot-count">Number of Shots Taken: ${totalShots}</h3>
+            <h3 id="game-count">Number of Games: ${totalGames}</h3>
+            <h3 id="sunk-count">Number of Times Hit: ${totalHits}</h3>
+            <h3 id="win-count">Number of Games Won: ${totalWin}</h3>
+            <h3 id="shot-count">Number of Shots Fired: ${totalShots}</h3>
         `
     }
 
@@ -215,6 +250,8 @@ const display = () =>{
                     box.classList.add('hit')
                 }else if(player.board.board[loc] === -2){
                     box.className = 'missed' 
+                }else{
+                    box.className = ''
                 }
             }
         });
@@ -229,11 +266,32 @@ const display = () =>{
                     box.className = 'hit'   
                 }else if(player.enemyBoard[loc] === -2){
                     box.classList.add('missed')
+                }else{
+                    box.className = ''
                 }
             }
         })
 
     }
+
+    const gameOverOverlay = (victory=true, turn, player, enemy)=>{
+
+
+        const overOverlay = document.querySelector('#gameOver')
+        overOverlay.classList.toggle('hidden')
+        const overOverlayScore = document.querySelector('#gameOver .top')
+        overOverlayScore.innerHTML = `
+            <h4>YOU ${victory? 'WON' : 'LOST'} IN</h4>
+            <h1>${turn} Turns</h1>
+            <h4>Play Again?</h4>
+            <br>
+        `
+        
+
+    }
+
+
+    
 
     const enemyBoardEvent = (player, enemy)=>{
         const enemyBoard = document.querySelector('#right-board')
@@ -242,17 +300,35 @@ const display = () =>{
                     e.stopPropagation
                     if(player){
                         let coordinate =  String(e.target.id).slice(1)
-                        if(player.hitEnemy(coordinate, enemy)){
+                        let [attack, attackStatus] = player.hitEnemy(coordinate, enemy)
+                        if(attack){
+                            lastAttack1 = attackStatus
                             generateEnemyBoard(player)
-                            enemy.randomHitEasy(player)
+                            if(enemy.randomHitEasy(player)){
+                                totalHits++
+                                lastAttack2 = 'Hit'
+                            }else{
+                                lastAttack2 = 'Missed'
+                            }
                             generateUserBoard(player)
                             turn++
                             totalShots++
                             remaining = enemy.hp
                             statusUpdate()
-                            // remaining = 17
-                            // lastAttack1 = '--'
-                            // lastAttack2 = '--'
+                        }
+                        if(enemy.hp===0  || turn ===100){
+                            console.log('game Finished')
+                            gameOverOverlay(true, turn, player, enemy)
+                            totalGames++
+                            totalWin++
+                            turn = 0
+                            remaining = 17
+                        }else if(player.hp===0){
+                            console.log('game Finished')
+                            gameOverOverlay(false, turn, player, enemy)
+                            totalGames++
+                            turn = 0
+                            remaining = 17
                         }
                         
                     }
@@ -266,7 +342,7 @@ const display = () =>{
     
 
 
- return {initialRender, generateUserBoard, generateEnemyBoard, statusUpdate, enemyBoardEvent, placementRender}
+ return {initialRender, generateUserBoard, generateEnemyBoard, statusUpdate, enemyBoardEvent, placementRender, resetScore}
 }
 
 export default display

@@ -20,6 +20,14 @@ class Player{
 
     changeTurn(){this.turn ? this.turn = false : this.turn = true}
 
+    resetBoard(){
+        this.board.resetGameBoard()
+        this.enemyBoard = Array(100).fill(0)
+        this.shipList = [new Ship(5),new Ship(4),new Ship(3),new Ship(3),new Ship(2)]
+        this.hp = 17
+        this.turn = false
+    }
+
 
     randomPlacement(){
         for(let ship of this.shipList){
@@ -52,27 +60,33 @@ class Player{
                 if(this.enemyBoard[hitIndex]===0){
                     currentHit = true
                     this.enemyBoard[hitIndex] = enemy.board.receiveAttack(hitIndex) ? -1 : -2
+                    if(this.enemyBoard[hitIndex] === -1){
+                        enemy.hp = enemy.hp-1
+                        return true
+                    }
                 }
             }   
         }
     }
 
     hitEnemy(coordinate, enemy){
-        console.log(coordinate)
+        console.log('attacked', coordinate)
         if(this.enemyBoard.indexOf(0)!==-1 && !enemy.board.checkAllSunk()){
             let hitIndex = coordinate
             if(this.enemyBoard[hitIndex]===0){
                 if(enemy.board.receiveAttack(hitIndex)){
                     this.enemyBoard[hitIndex] = -1
                     enemy.hp -=1
+                    return[true, 'Hit']
                 }else{
                     this.enemyBoard[hitIndex] = -2
+                    return [true, 'Missed']
                 }
-                return true
+                
             }
             
         }
-        return false
+        return [false, '--']
 
     }
 
