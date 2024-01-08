@@ -12,6 +12,7 @@ dom.initialRender()
 const playAgain = document.querySelector('#play-again')
 
 playAgain.addEventListener('click', e => {
+    dom.resetScore()
     const overOverlay = document.querySelector('#gameOver')
     p1.resetBoard();
     p2.resetBoard();
@@ -19,7 +20,7 @@ playAgain.addEventListener('click', e => {
 
     dom.generateUserBoard(p1)
     dom.generateEnemyBoard(p1)
-    dom.resetScore()
+    
     dom.statusUpdate()
 
     overOverlay.classList.toggle('hidden')

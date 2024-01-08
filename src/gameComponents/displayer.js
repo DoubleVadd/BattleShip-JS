@@ -274,11 +274,10 @@ const display = () =>{
 
     }
 
-    const gameOverOverlay = (victory=true, turn, player, enemy)=>{
-
-
+    const gameOverOverlay = (victory=true, player, enemy)=>{
         const overOverlay = document.querySelector('#gameOver')
-        overOverlay.classList.toggle('hidden')
+        console.log(overOverlay)
+        overOverlay.className = ''
         const overOverlayScore = document.querySelector('#gameOver .top')
         overOverlayScore.innerHTML = `
             <h4>YOU ${victory? 'WON' : 'LOST'} IN</h4>
@@ -297,6 +296,7 @@ const display = () =>{
         const enemyBoard = document.querySelector('#right-board')
         enemyBoard.childNodes.forEach(box => {
                 box.addEventListener('click', e =>{
+                     console.log(turn)
                     e.stopPropagation
                     if(player){
                         let coordinate =  String(e.target.id).slice(1)
@@ -318,16 +318,14 @@ const display = () =>{
                         }
                         if(enemy.hp===0  || turn ===100){
                             console.log('game Finished')
-                            gameOverOverlay(true, turn, player, enemy)
+                            gameOverOverlay(true, player, enemy)
                             totalGames++
                             totalWin++
-                            turn = 0
                             remaining = 17
                         }else if(player.hp===0){
                             console.log('game Finished')
-                            gameOverOverlay(false, turn, player, enemy)
+                            gameOverOverlay(false, player, enemy)
                             totalGames++
-                            turn = 0
                             remaining = 17
                         }
                         
