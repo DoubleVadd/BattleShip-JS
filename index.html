@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BATTLE SHIP</title>
+<link rel="icon" href="favicon-32x32.ico"><script defer src="main.bundle.js"></script></head>
+<body>
+    <div id="overlay"></div>
+    <div id="gameOver">
+        <div class="top">
+            <h4>Welcome To Simple Battleship</h4>
+            <h2>Current Opponent: Simple AI</h2>
+            <p style="font-size: 1.7rem; margin-bottom: 4rem;">*currently only easy AI opponent is implemented</p>
+            <h4>Begin Game?</h4>
+            <br>
+        </div>
+        <button id="play-again">Play</button>
+    </div>
+    <div id="gameSetup" class="hidden">
+        <div class="top">
+            <h1>Please Organize Your Ships: 1/5</h1>
+            <h2>To place the Current Ship, Hover Over the Grid and Left Click.</h2>
+            <h2>Game Will Start Automatically Once All Ships are Placed.</h2>
+            <br>
+            <hr>
+            <h2>You Are Currently Placing:</h2>
+            <h1 class="ship">##</h1>
+        </div>
+        <div class="bottom">
+            <button id="rotate">Rotate</button>
+            <button id="random-placement">Place All Randomly</button>
+        </div>
+    </div>
+    <main class="game">
+    </main>
+    
+</body>
+</html>
