@@ -21,6 +21,7 @@ html {
     
 }
 
+
 #overlay {
     position: fixed; /* Sit on top of the page content */
     display: block; /* Hidden by default */
@@ -307,3 +308,32 @@ hr{
     border-bottom: 1px dashed var(--green);
     margin-bottom: 1rem;
 }
+
+
+@media screen and (min-width: 1501px) {
+    #errorMessage {
+        z-index: 9999;
+        display: none;
+    }
+    
+  }
+
+@media screen and (max-width: 1500px) {
+    #errorMessage {
+        z-index: 9999;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #overlay, #gameOver, #gameSetup, .game{
+        display: none;
+    } 
+    
+}
+
+
+
+
